@@ -8,11 +8,7 @@ angular.module('app').config(function($routeProvider, $locationProvider) {
       enabled: true,
       requireBase: false
     });
+    //loads main.jade and uses the controller defined temporarily below.
     $routeProvider
-        .when('/', { templateUrl: '/partials/main', controller: 'mainCtrl'});
-});
-
-
-angular.module('app').controller('mainCtrl', function($scope) {
-    $scope.myVar = "Hello Angular";
+        .when('/', { templateUrl: '/partials/main', controller: 'mvMainCtrl'});
 });
