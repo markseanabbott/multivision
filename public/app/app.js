@@ -10,5 +10,5 @@ angular.module('app').config(function($routeProvider, $locationProvider) {
     });
     //loads main.jade and uses the controller defined temporarily below.
     $routeProvider
-        .when('/', { templateUrl: '/partials/main', controller: 'mvMainCtrl'});
+        .when('/', { templateUrl: '/partials/main/main', controller: 'mvMainCtrl'});
 });

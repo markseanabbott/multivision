@@ -1,0 +1,10 @@
+.navbar-right(ng-controller="mvNavBarLoginCtrl")
+  form.navbar-form
+    .form-group
+      //-placeholder for email. Assigning the variable to the angular variable username
+      input.form-control(placeholder="Email", ng-model="username")
+    .form-group
+      //-placeholder for password. Assigning the variable to the angular variable username
+      input.form-control(type="password" placeholder="Password", ng-model="password")
+    //-create a button, using angular click with the word signin beside it, will use the stylus file in stylus to create separation
+    button.btn.btn-primary(ng-click="signin(username,password)") Signin

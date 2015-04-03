@@ -1,4 +1,5 @@
 angular.module('app').controller('mvMainCtrl', function($scope) {
+  //sample data, will eventually come from DB
   $scope.courses = [
   {name: 'C# for Sociopaths', featured: true, published: new Date('10/5/2013')},
   {name: 'C# for Non-Sociopaths', featured: true, published: new Date('10/12/2013')},
