@@ -2,9 +2,11 @@
   .jumbotron
     h1 Multivision
     p Welcome to multivision! the most comprehensive and complete collection of extreme tech training videos on the web. 
-    
   .row
-    .col-md-6 
+    .col-md-12
+      div(ng-include="'/partials/main/property-info'")
+  .row
+    .col-md-6
       div(ng-include="'/partials/main/featured-courses'")
     .col-md-6
       div(ng-include="'/partials/main/new-courses'")
