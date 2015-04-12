@@ -16,7 +16,7 @@ var config = require('./server/config/config')[env];
 require('./server/config/express')(app, config);
 require('./server/config/mongoose')(config);
 //in order to look up the user we first need to grab the user model
-var User = mongoose.model('user');
+var User = mongoose.model('User');
 passport.use(new LocalStrategy(
 	//uses username, password and the done callback
 	function(username, password, done) {
@@ -35,9 +35,7 @@ passport.serializeUser(function(user, done) {
 	}
 });
 passport.deserializeUser(function(id, done) {
-	user.findOne({
-		_id: id
-	}).exec(function(err, user) {
+	User.findOne({_id: id}).exec(function(err, user) {
 		if (user) {
 			return done(null, user);
 		} else {

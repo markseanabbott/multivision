@@ -9,21 +9,18 @@ module.exports = function(app) {
   app.get('/partials/*', function(req, res) {
     res.render('../../public/app/' + req.params[0]);
   });
-
+//middleware that authenticates the return value from passport.authenticate.
   app.post('/login', function(req, res, next) {
     var auth = passport.authenticate('local', function(err, user) {
       if (err) {return next(err);}
       if (!user) {res.send({success: false})}
+      req.logIn(user, function(err){
+        if (err) {return next(err);}
+          res.send({success:true, user:user});
+      })
     })
+    auth(req,res,next);
   });
-  /* commenting out since it is no longer needed. I am leaving it in place so I can review later
-	app.get('*', function(req, res) {
-	res.render('index', {
-	  //assign a variable to be passed to the index file from the mongo db constructor
-	  mongoMessage: mongoMessage
-	});
-	});
-	*/
   //add route for ALL. This essentially makes the client side the routing tool. This is the index view
   app.get('*', function(req, res) {
     res.render('index');
