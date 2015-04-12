@@ -1,5 +1,8 @@
 var express = require('express'),
-  mongoose = require('mongoose');
+	mongoose = require('mongoose'),
+	passport = require('passport'),
+	//Strategy defines how the server will authenticate. Local strategy is local.
+	LocalStrategy = require('passport-local').Strategy;
 
 var env = process.env.NODE_ENV = process.env.NODE_ENV || 'development';
 
@@ -12,6 +15,36 @@ var config = require('./server/config/config')[env];
 //and the config variable into the function without express.js
 require('./server/config/express')(app, config);
 require('./server/config/mongoose')(config);
+//in order to look up the user we first need to grab the user model
+var User = mongoose.model('user');
+passport.use(new LocalStrategy(
+	//uses username, password and the done callback
+	function(username, password, done) {
+		User.findOne({username: username}).exec(function(err, user) {
+			if (user) {
+				return done(null, user);
+			} else {
+				return done(null, false);
+			}
+		})
+	}
+));
+passport.serializeUser(function(user, done) {
+	if (user) {
+		done(null, user._id);
+	}
+});
+passport.deserializeUser(function(id, done) {
+	user.findOne({
+		_id: id
+	}).exec(function(err, user) {
+		if (user) {
+			return done(null, user);
+		} else {
+			return done(null, false);
+		}
+	})
+});
 require('./server/config/routes')(app);
 //retrieve the port for the application from the environment, if no port exists, use 3030
 app.listen(config.port);
