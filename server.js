@@ -1,7 +1,7 @@
 var express = require('express'),
 	mongoose = require('mongoose'),
 	passport = require('passport'),
-	//Strategy defines how the server will authenticate. Local strategy is local.
+	//Strategy defines how the server will implement the authenticate. Local strategy is local.
 	LocalStrategy = require('passport-local').Strategy;
 
 var env = process.env.NODE_ENV = process.env.NODE_ENV || 'development';
@@ -18,7 +18,8 @@ require('./server/config/mongoose')(config);
 //in order to look up the user we first need to grab the user model
 var User = mongoose.model('User');
 passport.use(new LocalStrategy(
-	//uses username, password and the done callback
+	//brings in the User model created in mongoose.js
+	//uses username, password and the done callback to verify the user exists
 	function(username, password, done) {
 		User.findOne({username: username}).exec(function(err, user) {
 			if (user) {
@@ -29,6 +30,12 @@ passport.use(new LocalStrategy(
 		})
 	}
 ));
+
+//serialize and seserialize user is applied throughout the session history of the user
+//In this example, only the user ID is serialized to the session,
+//keeping the amount of data stored within the session small.
+//When subsequent requests are received, this ID is used to find the user,
+//which will be restored to req.user.
 passport.serializeUser(function(user, done) {
 	if (user) {
 		done(null, user._id);

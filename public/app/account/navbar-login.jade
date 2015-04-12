@@ -1,5 +1,6 @@
 .navbar-right(ng-controller="mvNavBarLoginCtrl")
-  form.navbar-form
+  //-calling the isAuth function from mvIdentity service. Object is brought into scope in the MVNavBarCntrl
+  form.navbar-form(ng-hide="identity.isAuthenticated()")
     .form-group
       //-placeholder for email. Assigning the variable to the angular variable username
       input.form-control(placeholder="Email", ng-model="username")
