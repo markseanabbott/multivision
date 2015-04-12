@@ -1,4 +1,5 @@
-var mongoose = require('mongoose');
+var mongoose = require('mongoose'),
+	crypto = require('crypto');
 module.exports = function(config) {
 	//connect to local mongo connection and use multivision db, will be created if does not exist
 	//mongoose.connect('mongodb://localhost/multivision')
@@ -17,16 +18,40 @@ module.exports = function(config) {
 	var userSchema = mongoose.Schema({
 		firstName:String,
 		lastName:String,
-		username:String
+		username:String,
+		salt:String,
+		hash_pwd:String
 	});
+	userSchema.methods = {
+		authenticate: function(passwordToMatch){
+			//THIS access the current use object.
+			return hashPwd(this.salt, passwordToMatch) === this.hash_pwd;
+		}
+	}
 	//using the above schema to create a user model
 	var User = mongoose.model("User",userSchema);
 	//if it doesn't return any users, it creates a default
 	User.find({}).exec(function(err,collection){
 		if(collection.length === 0) {
-			User.create({firstName:'Mark',lastName:'Abbott',username:'mabbott'});
-			User.create({firstName:'bob',lastName:'smith',username:'bsmith'});
-			User.create({firstName:'slimy',lastName:'greasy',username:'test'});
+			var salt, hash;
+			salt=createSalt();
+			hash = hashPwd(salt, 'mabbott')
+			User.create({firstName:'Mark',lastName:'Abbott',username:'mabbott', salt:salt, hash_pwd:hash});
+			salt=createSalt();
+			hash = hashPwd(salt, 'bsmith')
+			User.create({firstName:'bob',lastName:'smith',username:'bsmith', salt:salt, hash_pwd:hash});
+			salt=createSalt();
+			hash = hashPwd(salt, 'test')
+			User.create({firstName:'slimy',lastName:'greasy',username:'test', salt:salt, hash_pwd:hash});
 		}
 	});
 };
+
+function createSalt(){
+	return crypto.randomBytes(128).toString('base64');
+}
+
+function hashPwd(salt,pwd){
+	var hmac = crypto.createHmac('sha1', salt);
+	return hmac.update(pwd).digest('hex');
+}

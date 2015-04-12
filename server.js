@@ -22,7 +22,9 @@ passport.use(new LocalStrategy(
 	//uses username, password and the done callback to verify the user exists
 	function(username, password, done) {
 		User.findOne({username: username}).exec(function(err, user) {
-			if (user) {
+			//users the userSchema method object to ensure user is authenticated
+			//passing password field from form to object
+			if (user && user.authenticate(password)) {
 				return done(null, user);
 			} else {
 				return done(null, false);
