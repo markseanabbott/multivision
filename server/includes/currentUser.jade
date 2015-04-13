@@ -1,0 +1,6 @@
+//-script tag that will create a global variable that will maintain the current user
+//-first checking to see if usef exists. If it does then creating the variable window.bootstrappedUserObject in the HTML renderring
+//- this will still need to be fetched and processed by angular. 
+if !! bootstrappedUser
+  script.
+    window.bootstrappedUserObject = !{JSON.stringify(bootstrappedUser))

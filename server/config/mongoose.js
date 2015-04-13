@@ -20,7 +20,9 @@ module.exports = function(config) {
 		lastName:String,
 		username:String,
 		salt:String,
-		hash_pwd:String
+		hash_pwd:String,
+		// {String} implies and ARRAY of potential roles
+		roles:[String]
 	});
 	userSchema.methods = {
 		authenticate: function(passwordToMatch){
@@ -36,10 +38,10 @@ module.exports = function(config) {
 			var salt, hash;
 			salt=createSalt();
 			hash = hashPwd(salt, 'mabbott')
-			User.create({firstName:'Mark',lastName:'Abbott',username:'mabbott', salt:salt, hash_pwd:hash});
+			User.create({firstName:'Mark',lastName:'Abbott',username:'mabbott', salt:salt, hash_pwd:hash, roles:['admin']});
 			salt=createSalt();
 			hash = hashPwd(salt, 'bsmith')
-			User.create({firstName:'bob',lastName:'smith',username:'bsmith', salt:salt, hash_pwd:hash});
+			User.create({firstName:'bob',lastName:'smith',username:'bsmith', salt:salt, hash_pwd:hash, roles:['gm']});
 			salt=createSalt();
 			hash = hashPwd(salt, 'test')
 			User.create({firstName:'slimy',lastName:'greasy',username:'test', salt:salt, hash_pwd:hash});

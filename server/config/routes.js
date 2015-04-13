@@ -11,8 +11,18 @@ module.exports = function(app) {
   });
 //bring in the auth function from auth.js where authentication occurs.
   app.post('/login', auth.authenticate);
+//logout route that will work within the auth service created in myAuth.js
+  app.post('/logout', function(req,res){
+    req.logout();
+    res.end();
+  });
+  //adding route that passes the user data to the index page
+
   //add route for ALL. This essentially makes the client side the routing tool. This is the index view
   app.get('*', function(req, res) {
-    res.render('index');
+    res.render('index', {
+      //passing username to front end from back end where the user currently exists
+      bootstrappedUser:req.user
+    });
   });
 }

@@ -9,3 +9,17 @@
       input.form-control(type="password" placeholder="Password", ng-model="password")
     //-create a button, using angular click with the word signin beside it, will use the stylus file in stylus to create separation
     button.btn.btn-primary(ng-click="signin(username,password)") Signin
+  ul.nav.navbar-nav.navbar-right(ng-show="identity.isAuthenticated()")
+    li.dropdown
+      a.dropdown-toggle(href="",data-toggle="dropdown")
+        | {{identity.currentUser.firstName + " " + identity.currentUser.lastName}}
+        b.caret
+      ul.dropdown-menu
+        //-checks to ensure user is admin, and posts the appropriate menu item
+        li(ng-show="identity.currentUser.isAdmin()")
+          a(href="/admin/users") User Admin
+        li(ng-show="identity.currentUser.isGm()")
+            a(href="/gm") GM View
+        li
+          a(href="", ng-click="signout()") Sign Out
+          
