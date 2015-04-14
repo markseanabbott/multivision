@@ -9,9 +9,15 @@ module.exports = function(config) {
 	mongoose.connect(config.db)
 		//create variable to connect to db
 	var db = mongoose.connection;
-	db.on('error', console.error.bind(console, 'connection error...'));
+	db.on('error',function (err){
+		console.log('mongoose could not connect: ' + err);
+		mongoose.disconnect();
+		process.exit(1);
+	});
+
 	db.once('open', function callback() {
 		console.log('multivision db opened successfully');
+
 	});
 
 	//database schema for User model
