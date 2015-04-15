@@ -5,7 +5,7 @@
     {{identity.currentUser.firstName + " " + identity.currentUser.lastName}}
   .row
     .col-md-12
-      div(ng-include="'/partials/main/property-info'", ng-show="identity.currentUser.isGm()")
+      div(ng-include="'/partials/main/property-info'" , ng-show="identity.currentUser.isGm()")
   .row
     .col-md-6
       div(ng-include="'/partials/main/featured-courses'")

@@ -18,7 +18,8 @@ angular.module('app').controller('mvNavBarLoginCtrl', function($scope,$http,mvId
       $scope.username = "";
       $scope.password = "";
       //notify a successful logout
-      mvNotifier.notify('You have successfully signed out!');
+      mvNotifier.notify('success','You have successfully signed out!');
+      //return to the root of the website upon successful logout
       $location.path('/');
     })
   }
