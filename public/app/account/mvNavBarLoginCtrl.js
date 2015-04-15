@@ -8,17 +8,17 @@ angular.module('app').controller('mvNavBarLoginCtrl', function($scope,$http,mvId
       } else {
         mvNotifier.notify('error','you have failed to logged in!');
       }
-    })
+    });
   }
   //create a methout that allow signout. This is activated by the ng-click call from navbar-login.jade
   $scope.signout=function() {
     //calls the logout user frunction from the mvAuth service
-    mvAuth.logoutUser().then(function(){
+    mvAuth.logoutUser().then(function() {
       //clear username and password fields
-      $scope.username="";
-      $scope.password="";
+      $scope.username = "";
+      $scope.password = "";
       //notify a successful logout
-      mvNotifier.notify('success','You have Successfully Logged out');
+      mvNotifier.notify('You have successfully signed out!');
       $location.path('/');
     })
   }

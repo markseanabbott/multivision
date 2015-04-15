@@ -1,5 +1,15 @@
-var auth = require('./auth');
+var auth = require('./auth'),
+  mongoose=require('mongoose'),
+  User = mongoose.model('User');
+
 module.exports = function(app) {
+  //adds route for api/users which first checks the users ROLE against admin. This is performed in auth.js
+  //if the user is admin, it will display the page which is the user collection pulled from mongoose.
+  app.get('/api/users',auth.requiresRole("admin"), function(req,res){
+    User.find({}).exec(function(err,collection){
+      res.send(collection);
+    })
+  });
   //routing sub section. The catch all route should remain at the end. Which will catch all routes if they arent defined previously
 
   //this defines the routes for partials. this will render the sub file name under the partials directory

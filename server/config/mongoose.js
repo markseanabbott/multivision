@@ -27,7 +27,7 @@ module.exports = function(config) {
 		username:String,
 		salt:String,
 		hash_pwd:String,
-		// {String} implies and ARRAY of potential roles
+		// [String] implies and ARRAY of potential roles
 		roles:[String]
 	});
 	userSchema.methods = {
