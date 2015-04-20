@@ -13,7 +13,10 @@ angular.module('app').factory('mvIdentity', function($window, mvUser){
     //this is a simple function that will allow me at any point to ask the service if we have
     //a successfully logged in user
     isAuthenticated: function(){
-      return !!this.currentUser;
+      return !! this.currentUser;
+    },
+    isAuthorized: function(role){
+      return !! this.currentUser && this.currentUser.roles.indexOf(role) > -1;
     }
   }
 })

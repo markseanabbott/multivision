@@ -18,6 +18,7 @@ angular.module('app').controller('mvNavBarLoginCtrl', function($scope,$http,mvId
       $scope.username = "";
       $scope.password = "";
       //notify a successful logout
+      //the format is "type","message" . This allows me to eventually make multiple versions of the notification system based on desired results. 
       mvNotifier.notify('success','You have successfully signed out!');
       //return to the root of the website upon successful logout
       $location.path('/');
